@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set Budget</title>
+</head>
+<body>
+    <h1>Set a Budget</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Budget</button>
+    </form>
+</body>
+</html>

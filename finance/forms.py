@@ -1,7 +1,8 @@
 from datetime import timezone
 from django import forms
-from .models import Transaction
+from .models import Transaction, Budget
 
+# Transaction form
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
@@ -24,3 +25,14 @@ class TransactionForm(forms.ModelForm):
         if commit:
             transaction.save()  # Save the instance to the database
         return transaction
+    
+
+# Budget form:
+class BudgetForm(forms.ModelForm):
+    class Meta:
+        model = Budget
+        fields = ['amount', 'category', 'start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }    

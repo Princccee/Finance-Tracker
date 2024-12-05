@@ -15,13 +15,15 @@ def user_goals(request):
     goals = SavingsGoal.objects.filter(user = request.user)
     return goals
 
+
+#----------------------------------------------------------------------------------------------
 # Transactions list of a particular user:
 def transaction_list(request):
     transactions = Transaction.objects.filter(user = request.user)
     return render(request, 'finance/transactions.html', {'transactions': transactions})
 
-
-from .forms import TransactionForm
+# Create transaction for user:
+from .forms import TransactionForm 
 def create_transaction(request):
     if request.method == 'POST':
         form = TransactionForm(request.POST)
@@ -31,7 +33,7 @@ def create_transaction(request):
     else:
         form = TransactionForm()  # Empty form for GET request
 
-    return render(request, 'finance/create_transaction.html', {'form': form})
+    return render(request, 'transactions/create_transaction.html', {'form': form})
 
 
 # Edit transactions:
@@ -47,9 +49,24 @@ def edit_transaction(request, pk):
     else:
         form = TransactionForm(instance=transaction)  # Pre-fill with the existing data
 
-    return render(request, 'finance/edit_transaction.html', {'form': form})
+    return render(request, 'transactions/edit_transaction.html', {'form': form})
 
-        
+# Get the transaction list of user        
 def transaction_list(request):
     transactions = Transaction.objects.filter(user=request.user)  # Get the user's transactions
-    return render(request, 'finance/transactions.html', {'transactions': transactions})        
+    return render(request, 'transactions/transactions.html', {'transactions': transactions})       
+
+#----------------------------------------------------------------------------------------------
+# View to handle setting a budget
+from .forms import BudgetForm
+def set_budget(request):
+    if request.method == 'POST':
+        form = BudgetForm(request.POST)
+        if form.is_valid():
+            budget = form.save(commit=False)
+            budget.user = request.user  # Associate budget with the logged-in user
+            budget.save()
+            return redirect('budget_list')  # Redirect to a budget list page
+    else:
+        form = BudgetForm()
+    return render(request, 'budgets/set_budget.html', {'form': form})
