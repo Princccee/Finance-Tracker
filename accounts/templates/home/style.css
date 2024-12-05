@@ -1,0 +1,19 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    header {
+        text-align: center;
+    }
+    
+    header > div:last-child {
+        order: -1;
+        margin-bottom: 2rem;
+    }
+}

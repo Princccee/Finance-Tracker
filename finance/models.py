@@ -10,6 +10,7 @@ class Transaction(models.Model):
     ]
 
     CATEGORY = [
+        ('income', 'Income'),
         ('education', 'Education'),
         ('rent', 'Rent'),
         ('food', 'Food'),

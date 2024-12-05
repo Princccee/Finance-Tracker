@@ -13,3 +13,7 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
+
+
+def homepage(request):
+    return render(request, 'home/index.html')
