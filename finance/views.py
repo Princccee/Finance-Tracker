@@ -70,3 +70,39 @@ def set_budget(request):
     else:
         form = BudgetForm()
     return render(request, 'budgets/set_budget.html', {'form': form})
+
+#----------------------------------------------------------------------------------------------
+# Dasboard
+from django.db.models import Sum
+
+def dashboard(request):
+    # Aggregate data for dashboard
+    total_income = Transaction.objects.filter(type='Income').aggregate(Sum('amount'))['amount__sum'] or 0
+    total_expenses = Transaction.objects.filter(type='Expense').aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    monthly_data = (
+        Transaction.objects.values('date__month')
+        .annotate(total_amount=Sum('amount'))
+        .order_by('date__month')
+    )
+    months = [entry['date__month'] for entry in monthly_data]
+    monthly_totals = [entry['total_amount'] for entry in monthly_data]
+
+    category_data = (
+        Transaction.objects.filter(type='Expense')
+        .values('category')
+        .annotate(total_amount=Sum('amount'))
+        .order_by('-total_amount')
+    )
+    categories = [entry['category'] for entry in category_data]
+    category_totals = [entry['total_amount'] for entry in category_data]
+
+    context = {
+        'total_income': total_income,
+        'total_expenses': total_expenses,
+        'months': months,
+        'monthly_totals': monthly_totals,
+        'categories': categories,
+        'category_totals': category_totals,
+    }
+    return render(request, 'dashboard/dashboard.html', context)

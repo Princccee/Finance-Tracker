@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Dashboard</h1>
+
+    <h2>Total Income: {{ total_income }}</h2>
+    <h2>Total Expenses: {{ total_expenses }}</h2>
+
+    <!-- Monthly Transactions Chart -->
+    <div id="monthlyChart" style="width: 100%; height: 500px;"></div>
+
+    <!-- Category-wise Spending Chart -->
+    <div id="categoryChart" style="width: 100%; height: 500px;"></div>
+
+    <script>
+        // Monthly Totals Bar Chart
+        const months = {{ months|safe }};
+        const monthlyTotals = {{ monthly_totals|safe }};
+
+        const monthlyData = [{
+            x: months,
+            y: monthlyTotals,
+            type: 'bar',
+            marker: {
+                color: 'rgba(55, 128, 191, 0.7)',
+                line: {
+                    color: 'rgba(55, 128, 191, 1)',
+                    width: 2
+                }
+            },
+        }];
+
+        const monthlyLayout = {
+            title: 'Monthly Transaction Totals',
+            xaxis: { title: 'Month' },
+            yaxis: { title: 'Total Amount' }
+        };
+
+        Plotly.newPlot('monthlyChart', monthlyData, monthlyLayout);
+
+        // Category-wise Spending Pie Chart
+        const categories = {{ categories|safe }};
+        const categoryTotals = {{ category_totals|safe }};
+
+        const categoryData = [{
+            labels: categories,
+            values: categoryTotals,
+            type: 'pie',
+            marker: {
+                colors: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+            }
+        }];
+
+        const categoryLayout = {
+            title: 'Category-wise Spending',
+        };
+
+        Plotly.newPlot('categoryChart', categoryData, categoryLayout);
+    </script>
+</body>
+</html>
