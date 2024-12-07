@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 # function to handle app registration request:
 def register(request):
@@ -17,3 +18,15 @@ def register(request):
 
 def homepage(request):
     return render(request, 'home/index.html')
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')  # Redirect to a dashboard or another page
+        else:
+            return render(request, 'accounts/login/login.html', {'error': 'Invalid credentials'})
+    return render(request, 'accounts/login/login.html')
