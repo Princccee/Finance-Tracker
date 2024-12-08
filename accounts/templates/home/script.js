@@ -1,5 +1,7 @@
 function openLoginModal() {
-    document.getElementById('loginModal').classList.remove('hidden');
+        const loginUrl = "{% url 'login' %}"; // Django will render this into the actual URL
+        window.location.href = loginUrl;
+    // document.getElementById('loginModal').classList.remove('hidden');
 }
 
 function closeLoginModal() {

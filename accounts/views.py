@@ -26,7 +26,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')  # Redirect to a dashboard or another page
+            return redirect('home')  # Redirect to home page
         else:
             return render(request, 'accounts/login/login.html', {'error': 'Invalid credentials'})
     return render(request, 'accounts/login/login.html')

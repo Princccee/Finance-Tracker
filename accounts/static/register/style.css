@@ -1,0 +1,14 @@
+/* Additional custom styles can be added here if needed */
+.error-input {
+    border-color: #ef4444;
+    focus:ring-red-500;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Optional: Additional hover and focus states */
+input:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}

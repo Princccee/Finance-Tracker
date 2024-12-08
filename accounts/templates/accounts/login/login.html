@@ -41,7 +41,9 @@
       </div>
 
       <p class="signup-link">
-        Don't have an account? <a href="#" id="sign-up-link">Sign up</a>
+        Don't have an account? 
+        <a href="{% url 'register' %}" id="sign-up-link">Sign up</a>
+        {% comment %} <button onclick="window.location.href='{% url 'register' %}'" id="sign-up-link">Sign up</button> {% endcomment %}
       </p>
     </div>
   </div>
