@@ -6,7 +6,7 @@ from .forms import UserRegistrationForm
 
 
 def homepage(request):
-    return render(request, 'home/index.html')
+    return render(request, 'accounts/index.html')
 
 
 def register(request):
@@ -35,7 +35,7 @@ def login_view(request):
             return redirect('home_page')  # Redirect to a dashboard or home page
         else:
             messages.error(request, 'Invalid credentials.')
-    return render(request, 'accounts/login/login.html')
+    return render(request, 'accounts/login.html')
 
 
 # Function to handle logout 
