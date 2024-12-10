@@ -10,11 +10,9 @@ def user_budget(request):
     budgets = Budget.objects.filter(user = request.user)
     return budgets
 
-
 def user_goals(request):
     goals = SavingsGoal.objects.filter(user = request.user)
     return goals
-
 
 #----------------------------------------------------------------------------------------------
 # Transactions list of a particular user:
@@ -33,7 +31,7 @@ def create_transaction(request):
     else:
         form = TransactionForm()  # Empty form for GET request
 
-    return render(request, 'transactions/create_transaction.html', {'form': form})
+    return render(request, 'finance/create_transaction.html', {'form': form})
 
 
 # Edit transactions:
@@ -54,7 +52,7 @@ def edit_transaction(request, pk):
 # Get the transaction list of user        
 def transaction_list(request):
     transactions = Transaction.objects.filter(user=request.user)  # Get the user's transactions
-    return render(request, 'transactions/transactions.html', {'transactions': transactions})       
+    return render(request, 'finance/transactions.html', {'transactions': transactions})       
 
 #----------------------------------------------------------------------------------------------
 # View to handle setting a budget
@@ -69,7 +67,7 @@ def set_budget(request):
             return redirect('budget_list')  # Redirect to a budget list page
     else:
         form = BudgetForm()
-    return render(request, 'budgets/set_budget.html', {'form': form})
+    return render(request, 'finance/set_budget.html', {'form': form})
 
 #----------------------------------------------------------------------------------------------
 # Dasboard
@@ -105,4 +103,4 @@ def dashboard(request):
         'categories': categories,
         'category_totals': category_totals,
     }
-    return render(request, 'dashboard/dashboard.html', context)
+    return render(request, 'finance/dashboard.html', context)

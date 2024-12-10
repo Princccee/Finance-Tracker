@@ -1,39 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Transactions</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static "transactions/style.css" %}">
 </head>
 <body>
-    <h1>Transaction List</h1>
-    <table>
-        <tr>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Type</th>
-            <th>Date</th>
-        </tr>
-        {% for transaction in transactions %}
-        <tr>
-            <td>{{ transaction.amount }}</td>
-            <td>{{ transaction.category }}</td>
-            <td>{{ transaction.type }}</td>
-            <td>{{ transaction.date }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="container">
+        <h1>Transaction List</h1>
+        <table class="table">
+            <tr>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Date</th>
+            </tr>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.category }}</td>
+                <td>{{ transaction.type }}</td>
+                <td>{{ transaction.date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>

@@ -1,3 +1,4 @@
+{% load static tailwind_tags %}
 {% load  static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,6 +9,7 @@
     <link href="{% static 'home/style.css' %}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% tailwind_css %}
 </head>
 <body class="bg-gray-50">
     <nav class="bg-white shadow-md p-4">
@@ -17,12 +19,44 @@
                 <h1 class="text-2xl font-bold text-gray-800">FinX</h1>
             </div>
             <div class="space-x-4" style="display: flex; align-items: center; justify-content: flex-end; position: absolute; top: 10px; right: 10px;">
-                <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Transactions</a>
+                <a href="{% url "finance:dashboard" %}" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                <a href="{% url "finance:transaction_list" %}" class="text-gray-700 hover:text-blue-600">Transactions</a>
                 <a href="{% url 'finance:set_budget' %}" class="text-gray-700 hover:text-blue-600">Budget</a>
                 <button onclick="window.location.href='{% url 'login' %}'" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                     Login / Signup
                 </button>
+                
+                {% comment %} dropdown menu {% endcomment %}
+                <div class="dropdown" id="dropdown">
+                    <div class="dropdown__profile" id="dropdown-toggle">
+                        <div class="dropdown__image">
+                            <img src="https://cdn-icons-png.flaticon.com/128/3502/3502458.png" alt="image">
+                        </div>
+                    </div>
+                
+                    <div class="dropdown__list" id="dropdown-menu">
+                        <a href="#" class="dropdown__link">
+                            <i class="ri-user-line"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="#" class="dropdown__link">
+                            <i class="ri-time-line"></i>
+                            <span>Activity</span>
+                        </a>
+                        <a href="#" class="dropdown__link">
+                            <i class="ri-bookmark-line"></i>
+                            <span>Saved</span>
+                        </a>
+                        <a href="#" class="dropdown__link">
+                            <i class="ri-settings-3-line"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" class="dropdown__link">
+                            <i class="ri-logout-box-r-line"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>                    
             </div>
         </div>
     </nav>

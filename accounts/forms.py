@@ -1,13 +1,25 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 
-class UserRegistrationForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True, help_text="Enter your first name")
-    last_name = forms.CharField(max_length=30, required=True, help_text="Enter your last name")
-    email = forms.EmailField(required=True, help_text="Enter a valid email address")
-    phone_number = forms.CharField(max_length=15, required=True, help_text="Enter your phone number")
+# User registration form
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise forms.ValidationError("Passwords do not match.")
+
+
+# User login form
+class UserLoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)            

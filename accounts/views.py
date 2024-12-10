@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import UserRegistrationForm
@@ -13,14 +13,13 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()  # Save the user to the database
-            messages.success(request, 'Account created successfully! You can now log in.')
-            return redirect('login')  # Redirect to the login page
-        else:
-            messages.error(request, 'Please correct the errors below.')
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])  # Hash the password
+            user.save()
+            messages.success(request, 'Your account has been created! You can now log in.')
+            return redirect('login')
     else:
         form = UserRegistrationForm()
-
     return render(request, 'accounts/register.html', {'form': form})
 
 
