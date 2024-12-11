@@ -22,4 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls), # path to admin page
     path('', include('accounts.urls')), # path to accounts authentication page
     path('finance/', include('finance.urls')), # path to finance page
+
+
+
+    path('__reload__/', include("django_browser_reload.urls"))  # hot encoder
 ]
